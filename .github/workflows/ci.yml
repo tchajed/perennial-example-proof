@@ -19,6 +19,7 @@ jobs:
           ocaml-compiler: "4.14.x"
           dune-cache: true
           opam-disable-sandboxing: true
+          opam-pin: false
           opam-repositories: |
             default: https://github.com/ocaml/opam-repository.git
             rocq-released: https://rocq-prover.github.io/opam/released
