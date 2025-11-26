@@ -14,7 +14,6 @@ depends: [
 
 pin-depends: [
   ["perennial.dev"           "git+https://github.com/mit-pdos/perennial#96ea5458c8c45c101"]
-  ["coqutil.dev"         "git+https://github.com/mit-plv/coqutil#f595ddf0de48aae23"]
   ["coq-record-update.dev"   "git+https://github.com/tchajed/coq-record-update#7b2645210331c3ec"]
   ["rocq-stdpp.dev"          "git+https://gitlab.mpi-sws.org/iris/stdpp#187909f0c15b7c8"]
   ["rocq-iris.dev"           "git+https://gitlab.mpi-sws.org/iris/iris#fde0f8699242184"]
