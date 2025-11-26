@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         rocq-version: ["9.1.0", "dev"]
+      fail-fast: false
     steps:
       - uses: actions/checkout@v6
       - name: Install OCaml
@@ -32,6 +33,7 @@ jobs:
         run: |
           if [ "${{ matrix.rocq-version }}" = "dev" ]; then
             opam pin add rocq-runtime git+https://github.com/rocq-prover/rocq.git --yes
+            opam pin add rocq-stdlib git+https://github.com/rocq-prover/stdlib.git --yes
           else
             opam pin add rocq-runtime ${{ matrix.rocq-version }} --yes
           fi
