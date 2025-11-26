@@ -30,7 +30,11 @@ jobs:
           key: opam-${{ runner.os }}-${{ matrix.rocq-version }}-${{ hashFiles('*.opam') }}
       - name: Build opam dependencies
         run: |
-          opam pin add rocq-runtime.${{ matrix.rocq-version }}
+          if [ "${{ matrix.rocq-version }}" = "dev" ]; then
+            opam pin add rocq-runtime git+https://github.com/rocq-prover/rocq.git --yes
+          else
+            opam pin add rocq-runtime ${{ matrix.rocq-version }} --yes
+          fi
           opam install -y ./example-proof.opam --deps-only
       - name: Rocq build
         run: |
