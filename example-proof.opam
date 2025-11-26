@@ -1,7 +1,12 @@
 opam-version: "2.0"
 license: "MIT"
+maintainer: "Tej Chajed"
+authors: "Tej Chajed"
+homepage: "https://github.com/tchajed/perennial-example-proof"
+bug-reports: "https://github.com/tchajed/perennial-example-proof"
 dev-repo: "git+https://github.com/tchajed/perennial-example-proof.git"
 version: "dev"
+synopsis: "A test of perennial as a dependency"
 
 depends: [
   "perennial"
@@ -11,5 +16,5 @@ pin-depends: [
   ["perennial.dev" "git+https://github.com/mit-pdos/perennial#121dbfbd6ae8"]
 ]
 
-build: [make "-j%{jobs}"]
+build: [make "-j%{jobs}%"]
 install: ["./etc/install.sh"]
