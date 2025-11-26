@@ -34,5 +34,9 @@ Global Instance wp_func_call_Swap :
   WpFuncCall ver_example.Swap _ (is_pkg_defined ver_example) :=
   ltac:(solve_wp_func_call).
 
+Global Instance wp_func_call_UseSwap :
+  WpFuncCall ver_example.UseSwap _ (is_pkg_defined ver_example) :=
+  ltac:(solve_wp_func_call).
+
 End names.
 End ver_example.

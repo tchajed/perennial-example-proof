@@ -22,9 +22,21 @@ Definition Swapⁱᵐᵖˡ : val :=
     do:  ((![#ptrT] "y") <-[#intT] "$r1");;;
     return: #()).
 
+Definition UseSwap : go_string := "github.com/tchajed/perennial-example-proof.UseSwap"%go.
+
+(* go: example.go:7:6 *)
+Definition UseSwapⁱᵐᵖˡ : val :=
+  λ: "x",
+    exception_do (let: "x" := (mem.alloc "x") in
+    let: "z" := (mem.alloc (type.zero_val #intT)) in
+    do:  (let: "$a0" := (![#ptrT] "x") in
+    let: "$a1" := "z" in
+    (func_call #Swap) "$a0" "$a1");;;
+    return: #()).
+
 Definition vars' : list (go_string * go_type) := [].
 
-Definition functions' : list (go_string * val) := [(Swap, Swapⁱᵐᵖˡ)].
+Definition functions' : list (go_string * val) := [(Swap, Swapⁱᵐᵖˡ); (UseSwap, UseSwapⁱᵐᵖˡ)].
 
 Definition msets' : list (go_string * (list (go_string * val))) := [].
 

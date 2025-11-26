@@ -18,4 +18,18 @@ Proof.
   iFrame.
 Qed.
 
+Lemma wp_UseSwap (x: loc) (x_v: w64) :
+  {{{ is_pkg_init ver_example ∗ x ↦ x_v }}}
+    @! ver_example.UseSwap #x
+  {{{ RET #(); x ↦ (W64 0) }}}.
+Proof.
+  wp_start as "Hx".
+  wp_auto.
+  wp_apply (wp_Swap with "[$Hx $z]").
+  iIntros "[Hx Hz]".
+  wp_auto.
+  iApply "HΦ".
+  iFrame.
+Qed.
+
 End proof.
