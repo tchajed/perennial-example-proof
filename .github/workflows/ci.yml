@@ -26,8 +26,7 @@ jobs:
           key: opam-${{ runner.os }}-${{ hashFiles('*.opam.locked') }}
       - name: Build opam dependencies
         run: |
-          opam pin .
-          opam install -y . --deps-only
+          opam install -y ./example-proof.opam --deps-only
       - name: Rocq build
         run: |
           eval $(opam env)
