@@ -18,6 +18,7 @@ jobs:
         uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: "4.14.x"
+          cache-prefix: "v1-rocq-${{ matrix.rocq-version }}"
           dune-cache: true
           opam-disable-sandboxing: true
           opam-pin: false
@@ -29,7 +30,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "_opam"
-          key: opam-${{ runner.os }}-${{ matrix.rocq-version }} }}
+          key: opam-${{ runner.os }}-${{ matrix.rocq-version }}
       - name: Build opam dependencies
         run: |
           if [ "${{ matrix.rocq-version }}" = "dev" ]; then
