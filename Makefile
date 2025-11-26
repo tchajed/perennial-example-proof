@@ -4,8 +4,8 @@ ALL_VFILES = $(shell find $(SRC_DIRS) \
 						)
 PROJ_VFILES := $(shell find 'src' -name "*.v")
 
-# extract any global arguments for Rocq from _CoqProject
-ROCQPROJECT_ARGS := $(shell sed -E -e '/^\#/d' -e "s/'([^']*)'/\1/g" -e 's/-arg //g' _CoqProject)
+# extract any global arguments for Rocq from _RocqProject
+ROCQPROJECT_ARGS := $(shell sed -E -e '/^\#/d' -e "s/'([^']*)'/\1/g" -e 's/-arg //g' _RocqProject)
 
 # user configurable
 Q:=@
@@ -18,24 +18,24 @@ vo: $(PROJ_VFILES:.v=.vo)
 vos: $(PROJ_VFILES:.v=.vos)
 vok: $(PROJ_VFILES:.v=.vok)
 
-.rocqdeps.d: $(ALL_VFILES) _CoqProject | update-submodules
+.rocqdeps.d: $(ALL_VFILES) _RocqProject
 	@echo "ROCQ dep $@"
-	$(Q)rocq dep -vos -f _CoqProject $(ALL_VFILES) > $@
+	$(Q)rocq dep -vos -f _RocqProject $(ALL_VFILES) > $@
 
 # do not try to build dependencies if cleaning
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
 -include .rocqdeps.d
 endif
 
-%.vo: %.v _CoqProject | .rocqdeps.d
+%.vo: %.v _RocqProject | .rocqdeps.d
 	@echo "ROCQ compile $<"
 	$(Q)$(ROCQC) $(ROCQPROJECT_ARGS) $(ROCQ_ARGS) -o $@ $<
 
-%.vos: %.v _CoqProject | .rocqdeps.d
+%.vos: %.v _RocqProject | .rocqdeps.d
 	@echo "ROCQ -vos $<"
 	$(Q)$(ROCQC) $(ROCQPROJECT_ARGS) -vos $(ROCQ_ARGS) $< -o $@
 
-%.vok: %.v _CoqProject | .rocqdeps.d
+%.vok: %.v _RocqProject | .rocqdeps.d
 	@echo "ROCQ -vok $<"
 	$(Q)$(ROCQC) $(ROCQPROJECT_ARGS) -vok $(ROCQ_ARGS) $< -o $@
 
