@@ -1,0 +1,33 @@
+name: CI
+
+permissions: read-all
+
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install OCaml
+        uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: "4.14.x"
+          dune-cache: true
+          opam-disable-sandboxing: true
+          opam-repositories: |
+            default: https://github.com/ocaml/opam-repository.git
+      - name: Cache opam
+        uses: actions/cache@v4
+        with:
+          path: "_opam"
+          key: opam-${{ runner.os }}-${{ hashFiles('*.opam.locked') }}
+      - name: Build opam dependencies
+        run: |
+          opam pin .
+          opam install -y . --deps-only
+      - name: Rocq build
+        run: |
+          eval $(opam env)
+          make
