@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rocq-version: ["9.1.0", "dev"]
     steps:
       - uses: actions/checkout@v6
       - name: Install OCaml
@@ -23,9 +26,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "_opam"
-          key: opam-${{ runner.os }}-${{ hashFiles('*.opam.locked') }}
+          key: opam-${{ runner.os }}-${{ matrix.rocq-version }}-${{ hashFiles('*.opam') }}
       - name: Build opam dependencies
         run: |
+          opam pin rocq-runtime.${{ matrix.rocq-version }}
           opam install -y ./example-proof.opam --deps-only
       - name: Rocq build
         run: |
