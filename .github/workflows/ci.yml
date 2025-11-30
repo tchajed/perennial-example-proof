@@ -47,6 +47,7 @@ jobs:
           else
             opam pin add -n -y rocq-runtime ${{ matrix.rocq-version }} --yes
           fi
+          opam pin add -n -y .
           opam install -y ./example-proof.opam --deps-only
       - name: Rocq build
         run: |
