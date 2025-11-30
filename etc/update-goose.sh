@@ -17,7 +17,7 @@ GOOSE_OUTPUT=src/code
 GOOSE_CONFIG_DIR=src/code
 PROOFGEN_OUTPUT=src/generatedproof
 
-go run github.com/goose-lang/goose/cmd/goose@new \
+go run github.com/goose-lang/goose/cmd/goose \
   -out "$GOOSE_OUTPUT" -dir . ./...
-go run github.com/goose-lang/goose/cmd/proofgen@new \
+go run github.com/goose-lang/goose/cmd/proofgen \
   -out "$PROOFGEN_OUTPUT" -configdir "$GOOSE_CONFIG_DIR" -dir . ./...
