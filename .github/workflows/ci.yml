@@ -24,7 +24,7 @@ jobs:
         with:
           ocaml-compiler: "4.14.x"
           cache-prefix: "v1-rocq-${{ matrix.rocq-version }}"
-          dune-cache: true
+          dune-cache: false
           opam-disable-sandboxing: true
           opam-pin: false
           opam-repositories: |
@@ -35,7 +35,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "_opam"
-          key: opam-${{ runner.os }}-${{ matrix.rocq-version }}
+          key: opam-${{ runner.os }}-${{ matrix.rocq-version }}-${{ hashFiles('*.opam') }}
       - name: Build opam dependencies
         run: |
           if [ "${{ matrix.rocq-version }}" = "dev" ]; then
@@ -46,6 +46,7 @@ jobs:
             opam pin add -n -y coq.dev --dev-repo
           fi
           opam pin add -n -y .
+          opam reinstall --forget-pending
           opam install -y ./example-proof.opam --deps-only
       - name: Rocq build
         run: |
