@@ -31,6 +31,11 @@ jobs:
             default: https://github.com/ocaml/opam-repository.git
             rocq-released: https://rocq-prover.github.io/opam/released
             rocq-core-dev: https://rocq-prover.github.io/opam/core-dev
+      - name: Cache opam
+        uses: actions/cache@v4
+        with:
+          path: "_opam"
+          key: opam-${{ runner.os }}-${{ matrix.rocq-version }}-${{ hashFiles('*.opam') }}
       - name: Build opam dependencies
         run: |
           if [ "${{ matrix.rocq-version }}" = "dev" ]; then
