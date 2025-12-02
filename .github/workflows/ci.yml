@@ -48,9 +48,7 @@ jobs:
           opam pin add -n -y .
           opam reinstall --forget-pending
           opam install -y ./example-proof.opam --deps-only
-      - name: opam env
-        run: |
-          opam env | grep -o "^.*='[^']*'" >> $GITHUB_ENV
       - name: Rocq build
         run: |
+          eval $(opam env)
           make
