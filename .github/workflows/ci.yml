@@ -50,5 +50,4 @@ jobs:
           opam install -y ./example-proof.opam --deps-only
       - name: Rocq build
         run: |
-          eval $(opam env)
           make
