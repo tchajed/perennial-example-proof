@@ -31,6 +31,9 @@ jobs:
             default: https://github.com/ocaml/opam-repository.git
             rocq-released: https://rocq-prover.github.io/opam/released
             rocq-core-dev: https://rocq-prover.github.io/opam/core-dev
+      - name: opam env
+        run: |
+          opam env >> $GITHUB_ENV
       - name: Cache opam
         uses: actions/cache@v4
         with:
