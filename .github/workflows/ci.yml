@@ -50,6 +50,7 @@ jobs:
           opam install -y ./example-proof.opam --deps-only
       - name: opam env
         run: |
-          opam env >> $GITHUB_ENV
+          opam env | grep -o "^.*='[^']*'" >> $GITHUB_ENV
       - name: Rocq build
-        run: make
+        run: |
+          make
