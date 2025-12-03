@@ -8,8 +8,10 @@ ROCQPROJECT_ARGS := $(shell sed -E -e '/^\#/d' -e "s/'([^']*)'/\1/g" -e 's/-arg 
 Q:=@
 ROCQ_ARGS :=
 ROCQC := rocq compile
+ROCQ_DEP_ARGS := -w +module-not-found
 
 default: vo
+.PHONY: default
 
 vo: $(PROJ_VFILES:.v=.vo)
 vos: $(PROJ_VFILES:.v=.vos)
@@ -17,7 +19,7 @@ vok: $(PROJ_VFILES:.v=.vok)
 
 .rocqdeps.d: $(PROJ_VFILES) _RocqProject
 	@echo "ROCQ dep $@"
-	$(Q)rocq dep -vos -f _RocqProject $(PROJ_VFILES) > $@
+	$(Q)rocq dep $(ROCQ_DEP_ARGS) -vos -f _RocqProject $(PROJ_VFILES) > $@
 
 # do not try to build dependencies if cleaning
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
@@ -40,7 +42,7 @@ clean:
 	@echo "CLEAN vo glob aux"
 	$(Q)find $(SRC_DIRS) \( -name "*.vo" -o -name "*.vo[sk]" \
 		-o -name ".*.aux" -o -name ".*.cache" -o -name "*.glob" \) -delete
-	rm -f .rocqdeps.d
+	$(Q)rm -f .rocqdeps.d
 
 .PHONY: default
 .DELETE_ON_ERROR:
