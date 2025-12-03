@@ -10,3 +10,5 @@
 /src/code/**/*.v
 /src/generatedproof/
 .goose-output
+# ci
+.opam-git-deps

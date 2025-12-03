@@ -31,12 +31,12 @@ jobs:
             rocq-core-dev: https://rocq-prover.github.io/opam/core-dev
       - name: Extract opam git dependencies
         run: |
-          grep "git+https" *.opam > $RUNNER_TEMP/opam-git-deps || true
+          grep "git+https" *.opam > .opam-git-deps || true
       - name: Cache opam
         uses: actions/cache@v4
         with:
           path: "_opam"
-          key: opam-${{ runner.os }}-${{ matrix.rocq-version }}-${{ hashFiles(format('{0}/opam-git-deps', runner.temp)) }}
+          key: opam-${{ runner.os }}-${{ matrix.rocq-version }}-${{ hashFiles('.opam-git-deps') }}
       - name: Build opam dependencies
         run: |
           opam update
