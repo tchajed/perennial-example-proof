@@ -54,3 +54,7 @@ jobs:
         run: |
           eval $(opam env)
           make
+      - name: opam install
+        run: |
+          eval $(opam env)
+          opam install --assume-built .
