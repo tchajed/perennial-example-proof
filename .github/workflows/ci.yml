@@ -38,8 +38,10 @@ jobs:
           key: opam-${{ runner.os }}-${{ matrix.rocq-version }}-${{ hashFiles('*.opam') }}
       - name: Build opam dependencies
         run: |
+          opam update
           if [ "${{ matrix.rocq-version }}" = "dev" ]; then
-            opam update -y
+            opam pin add -n -y rocq-runtime.dev git+https://github.com/rocq-prover/rocq.git --yes
+            opam pin add -n -y rocq-core.dev git+https://github.com/rocq-prover/rocq.git --yes
             opam pin add -n -y coq-core.dev git+https://github.com/rocq-prover/rocq.git --yes
             opam pin add -n -y coq-stdlib.dev git+https://github.com/rocq-prover/stdlib.git --yes
             opam pin add -n -y coq.dev --dev-repo
