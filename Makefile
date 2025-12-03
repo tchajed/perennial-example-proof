@@ -1,8 +1,5 @@
 SRC_DIRS := 'src'
-ALL_VFILES = $(shell find $(SRC_DIRS) \
-							-name "*.v" \
-						)
-PROJ_VFILES := $(shell find 'src' -name "*.v")
+PROJ_VFILES := $(shell find $(SRC_DIRS) -name "*.v")
 
 # extract any global arguments for Rocq from _RocqProject
 ROCQPROJECT_ARGS := $(shell sed -E -e '/^\#/d' -e "s/'([^']*)'/\1/g" -e 's/-arg //g' _RocqProject)
@@ -18,9 +15,9 @@ vo: $(PROJ_VFILES:.v=.vo)
 vos: $(PROJ_VFILES:.v=.vos)
 vok: $(PROJ_VFILES:.v=.vok)
 
-.rocqdeps.d: $(ALL_VFILES) _RocqProject
+.rocqdeps.d: $(PROJ_VFILES) _RocqProject
 	@echo "ROCQ dep $@"
-	$(Q)rocq dep -vos -f _RocqProject $(ALL_VFILES) > $@
+	$(Q)rocq dep -vos -f _RocqProject $(PROJ_VFILES) > $@
 
 # do not try to build dependencies if cleaning
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
