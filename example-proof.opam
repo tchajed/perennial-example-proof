@@ -24,4 +24,4 @@ pin-depends: [
 ]
 
 build: [make "-j%{jobs}%"]
-install: ["./etc/install.sh"]
+install: ["go" "tool" "perennial-cli" "install"]
