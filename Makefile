@@ -1,6 +1,6 @@
-SRC_DIRS := 'src'
-PROJ_VFILES := $(shell find $(SRC_DIRS) -name "*.v")
-GOOSE_CONFIG_FILES := $(shell find $(SRC_DIRS) -name "*.v.toml")
+SRC_DIR := 'src'
+PROJ_VFILES := $(shell find $(SRC_DIR) -name "*.v")
+GOOSE_CONFIG_FILES := $(shell find $(SRC_DIR) -name "*.v.toml")
 GO_DIR := '.'
 GO_FILES := $(shell find $(GO_DIR) -name "*.go")
 
@@ -48,8 +48,12 @@ endif
 
 clean:
 	@echo "CLEAN vo glob aux"
-	$(Q)find $(SRC_DIRS) \( -name "*.vo" -o -name "*.vo[sk]" \
+	$(Q)find $(SRC_DIR) \( -name "*.vo" -o -name "*.vo[sk]" \
 		-o -name ".*.aux" -o -name ".*.cache" -o -name "*.glob" \) -delete
+	$(Q)for dir in $(SRC_DIR)/code $(SRC_DIR)/generatedproof; do \
+		if test -d "$$dir"; then find "$$dir" -name "*.v" -delete; fi \
+	done
+	$(Q)rm -f .goose-output
 	$(Q)rm -f .rocqdeps.d
 
 .PHONY: default
