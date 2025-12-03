@@ -17,8 +17,6 @@ jobs:
       - uses: actions/setup-go@v6
         with:
           go-version-file: "go.mod"
-      - name: Run update-goose.sh
-        run: ./etc/update-goose.sh
       - name: Install OCaml
         uses: ocaml/setup-ocaml@v3
         with:
