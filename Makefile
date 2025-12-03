@@ -1,5 +1,8 @@
 SRC_DIRS := 'src'
 PROJ_VFILES := $(shell find $(SRC_DIRS) -name "*.v")
+GOOSE_CONFIG_FILES := $(shell find $(SRC_DIRS) -name "*.v.toml")
+GO_DIR := '.'
+GO_FILES := $(shell find $(GO_DIR) -name "*.go")
 
 # extract any global arguments for Rocq from _RocqProject
 ROCQPROJECT_ARGS := $(shell sed -E -e '/^\#/d' -e "s/'([^']*)'/\1/g" -e 's/-arg //g' _RocqProject)
@@ -17,7 +20,12 @@ vo: $(PROJ_VFILES:.v=.vo)
 vos: $(PROJ_VFILES:.v=.vos)
 vok: $(PROJ_VFILES:.v=.vok)
 
-.rocqdeps.d: $(PROJ_VFILES) _RocqProject
+.goose-output: $(GO_FILES) $(GOOSE_CONFIG_FILES) goose.toml
+	@echo "GOOSE"
+	$(Q)go tool perennial-cli goose
+	@touch $@
+
+.rocqdeps.d: $(PROJ_VFILES) _RocqProject .goose-output
 	@echo "ROCQ dep $@"
 	$(Q)rocq dep $(ROCQ_DEP_ARGS) -vos -f _RocqProject $(PROJ_VFILES) > $@
 
