@@ -23,7 +23,7 @@ jobs:
           rocq-version: "${{ matrix.rocq-version }}"
       - name: Install dependencies
         run: |
-          opam pin -n -y .
+          opam pin --yes .
           opam install --deps-only .
       - name: Rocq build
         run: make
