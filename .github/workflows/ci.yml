@@ -29,3 +29,5 @@ jobs:
         run: make
       - name: opam install
         run: opam install --assume-built .
+      - name: opam uninstall
+        run: opam uninstall .
