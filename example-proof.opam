@@ -23,7 +23,7 @@ pin-depends: [
   ## end
 ]
 
-build: [make "GOCACHE=_build/.gocache" "-j%{jobs}%"]
+build: [make "-j%{jobs}%"]
 install: ["go" "tool" "perennial-cli" "install"]
 build-env: [
   [GOCACHE = "%{build}%/_build/.gocache"]
