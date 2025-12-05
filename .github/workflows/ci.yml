@@ -1,7 +1,6 @@
 name: CI
 
-permissions:
-  actions: write
+permissions: read-all
 
 on:
   - push
