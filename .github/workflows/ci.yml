@@ -1,7 +1,5 @@
 name: CI
 
-permissions: read-all
-
 on:
   - push
 
@@ -26,7 +24,7 @@ jobs:
           opam pin add --no-action -k path .
           opam install --deps-only .
       - name: Rocq build
-        run: make
+        run: make -j4
       - name: opam install
         run: opam install --assume-built .
       - name: opam uninstall
