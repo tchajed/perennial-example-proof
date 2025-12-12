@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           opam pin add --no-action -k path .
-          opam install --deps-only .
+          opam install -j4 --deps-only .
       - name: Rocq build
         run: make -j4
       - name: opam install
